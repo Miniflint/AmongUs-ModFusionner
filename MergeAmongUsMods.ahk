@@ -16,7 +16,11 @@ else if (FileExist("D:\SteamLibrary\steamapps\common\Among Us"),D)
 else if !(FileExist("D:\SteamLibrary\steamapps\common\Among Us"),D)
 {
     msgbox, 0, Une fenetre va arriver, selectionnez le dossier dans lequel se trouve les mods a fusionner
-    GETUSERINPUT(NothingFound)
+    FileSelectFolder, NothingFound,,, Selectionnez le dossier dans lequel se trouve Among Us
+    if NothingFound = 
+        Msgbox, vous n'avez rien selectionner
+    else
+        GETUSERINPUT(NothingFound)
 }
 
 GETUSERINPUT(FolderStart)
