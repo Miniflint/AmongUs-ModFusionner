@@ -35,5 +35,5 @@ FileFusion(FirstDirectory, SecondDirectory, DirName, PathFolder)
 {
     FileCopydir, %FirstDirectory%, %PathFolder%\%DirName%, 1   
     FileCopydir, %SecondDirectory%, %PathFolder%\%DirName%, 1
-    FileCreateShortcut, %PathFolder%\%DirName%\Among Us.exe, %A_DESKTOP%\Mod Among us - %DirName%.lnk
+    FileCreateShortcut, %PathFolder%\%DirName%\Among Us.exe, %A_DESKTOP%\%DirName%.lnk
 }
