@@ -1,4 +1,4 @@
-﻿Counter := 0
+Counter := 0
 Gui, Add, Progress, w200 h20 cGreen vMyProgress
 if (fileExist( "C:\Program Files (x86)\Steam\steamapps\common\Among Us"),D)
 {
@@ -27,6 +27,7 @@ else if !(FileExist("D:\SteamLibrary\steamapps\common\Among Us"),D)
 
 FileRead(StartingFolder)
 {
+    FileTemp = C:\Users\%A_UserName%\AppData\Roaming\temp.txt
     inputbox, ModsNumber, Mods Fusionner, how much mods do you wanna merge ?
     if ModsNumber = 
         Msgbox, You haven't named the folder
@@ -38,36 +39,32 @@ FileRead(StartingFolder)
             FileAppend,
             (
                 %FileNB%`n
-            ), %A_desktop%\temp.txt        
+            ), %FileTemp%
         }
         InputBox, FileName, Name the folder, Name the among us folder (it will be the name of the among us shortcut)
         if FileName = 
+        {
             Msgbox, You haven't named the folder
+            FileDelete, %Filetemp%
+        }
         else
         {
             Gui, Show
             FileCreateDir, %StartingFolder%\%FileName%
-            Loop, read, %A_desktop%\temp.txt
-            {                
-                CounterNumber := 100/ModsNumber
-                Counter := CounterNumber
+            CounterNumber := 100/ModsNumber
+            Counter := CounterNumber
+            Loop, read, %FileTemp%
+            {
                 Loop, parse, A_LoopReadLine, %A_Tab%,
                 {
-                    Loop
-                    {
                         Filecopydir, %A_LoopField%, %StartingFolder%\%FileName%, 1
                         GuiControl,, MyProgress, % Counter
                         Counter += CounterNumber
-                        if (counter >= 100)
-                        {
-                            FileCreateShortcut, %StartingFolder%\%FileName%\Among us.exe, %A_desktop%\%FileName%.lnk
-                            FileDelete,%A_desktop%\temp.txt
-                            gui destroy
-                            ExitApp
-                        }
-                    }
                 }
             }
+            Gui Destroy
+            FileCreateShortcut, %StartingFolder%\%FileName%\Among us.exe, %A_desktop%\%FileName%.lnk
+            FileDelete, %FileTemp%
         }
     }
 }
