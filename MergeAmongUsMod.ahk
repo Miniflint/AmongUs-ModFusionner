@@ -65,6 +65,26 @@ FileRead(StartingFolder)
             Gui Destroy
             FileCreateShortcut, %StartingFolder%\%FileName%\Among us.exe, %A_desktop%\%FileName%.lnk
             FileDelete, %FileTemp%
+            MsgLoop()
+            exitapp
         }
+    }
+}
+
+MsgLoop()
+{
+    MsgBoxSec = 5
+    Loop, %MsgBoxSec%
+    {
+        MsgBox,, installation statut, Installation completed`n the windows will disapear in %MsgBoxSec%, 1
+        ifmsgbox Ok
+        {
+            exitapp
+        }
+        if msgbox Close
+        {
+            exitapp
+        }
+        MsgBoxSec := MsgBoxSec-1
     }
 }
