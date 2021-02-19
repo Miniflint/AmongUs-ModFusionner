@@ -17,11 +17,42 @@ else if (FileExist("D:\SteamLibrary\steamapps\common\Among Us"),D)
 }
 else if !(FileExist("D:\SteamLibrary\steamapps\common\Among Us"),D)
 {
-    FileSelectFolder, NothingFound,,, Select the folder where among us is located
-    if NothingFound = 
-        Msgbox, You haven't selected anything
+    AmongUsStartingFolder = C:\Users\%A_UserName%\AppData\Roaming\AmongUsStartingFolder.ini
+    if !(FileExist(AmongUsStartingFolder))
+    {
+        FileSelectFolder, NothingFound,,, Select the folder where your among us mods are located
+        StringGetPos, pos, NothingFound , \, R
+        pos++
+        StringTrimLeft, AfterNothingFound, NothingFound, %pos%
+        if NothingFound = 
+        {
+            Msgbox, You haven't selected anything
+            exitapp
+        }
+        else if AfterNothingFound = Among Us
+        {
+            msgbox, you selected the among us folder - not WHERE the among us folder is located
+            exitapp
+        }
+        else
+        {
+            IniWrite, %NothingFound%, %AmongUsStartingFolder%, PathFolder, File
+            FileRead(NothingFound)
+        }
+    }
     else
-        FileRead(NothingFound)
+    {
+        IniRead, FromIniFolder, %AmongUsStartingFolder%, PathFolder, File, ERROR
+        if FromIniFolder = ERROR
+        {
+            IniDelete, %AmongUsStartingFolder%, PathFolder
+            msgbox, there is an error. please retry
+        }
+        else
+        {
+            FileRead(FromIniFolder)
+        }
+    }
 }
 
 
@@ -30,7 +61,10 @@ FileRead(StartingFolder)
     FileTemp = C:\Users\%A_UserName%\AppData\Roaming\temp.txt
     inputbox, ModsNumber, Mods Fusionner, how much mods do you wanna merge ?
     if ModsNumber = 
+    {
         Msgbox, You haven't named the folder
+        exitapp
+    }
     else
     {
         Loop, %ModsNumber%
@@ -46,6 +80,7 @@ FileRead(StartingFolder)
         {
             Msgbox, You haven't named the folder
             FileDelete, %Filetemp%
+            exitapp
         }
         else
         {
