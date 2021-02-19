@@ -101,6 +101,8 @@ IniFileDelete(FileIni, nb)
         msgbox, you haven't named the folder
     else if nb = 4
         msgbox, there is an ERROR
+    else if nb = 5
+        msgbox, you selected the among us folder - not the folder WHERE Among Us IS
     IniDelete, %FileIni%, AmongUsPath
     exitapp
 }
